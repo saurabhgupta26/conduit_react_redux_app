@@ -1,3 +1,0 @@
-[2020-07-27 03:37:48.631] [renderer1] [error] Error: [File Watcher (chokidar)] Inotify limit reached (ENOSPC)
-[2020-07-27 03:37:48.685] [renderer1] [error] [File Watcher (chokidar)] Inotify limit reached (ENOSPC)
-[2020-07-27 03:38:02.902] [renderer1] [warning] UNRESPONSIVE extension host, 'KnisterPeter.vscode-github' took 49% of 5831.302ms, saved PROFILE here: '/tmp/exthost-340eec.cpuprofile' [{"id":"gc","total":118767,"percentage":2},{"id":"KnisterPeter.vscode-github","total":2860348,"percentage":49},{"id":"michelemelluso.code-beautifier","total":108947,"percentage":2},{"id":"ms-vsliveshare.vsliveshare","total":190309,"percentage":3},{"id":"ritwickdey.LiveServer","total":28412,"percentage":0},{"id":"self","total":2523848,"percentage":43}]
