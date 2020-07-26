@@ -1,31 +1,33 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+// import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import "./App.css";
-import { SHOW_ARTICLES, SHOW_TAGS } from "./store/types";
+// import "./App.css";
+import {fetchTag} from "../store/types";
+
 
 class Tags extends React.Component {
   componentDidMount() {
     // If login, user data
-    if (localStorage.authToken) {
-      let url = "https://conduit.productionready.io/api/user";
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Token ${localStorage.authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then(({ user }) => {
-          this.setState({ isLoggedIn: true, userInfo: user });
-        })
-        .catch((err) => this.setState({ isLoggedIn: false }));
-    }
+    // if (localStorage.authToken) {
+    //   let url = "https://conduit.productionready.io/api/user";
+    //   fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       authorization: `Token ${localStorage.authToken}`,
+    //     },
+    //   })
+    //     .then((res) => res.json())
+    //     .then(({ user }) => {
+    //       this.setState({ isLoggedIn: true, userInfo: user });
+    //     })
+    //     .catch((err) => this.setState({ isLoggedIn: false }));
+    // }
+
     // Tags
-    fetch(`https://conduit.productionready.io/api/tags`)
-      .then((response) => response.json())
-      .then(({ tags }) => this.props.dispatch(SHOW_TAGS({ tags })));
+    this.props.dispatch(
+      fetchTag("https://conduit.productionready.io/api/tags")
+    );
   }
 
   render() {
@@ -50,4 +52,4 @@ class Tags extends React.Component {
 function mapState(state) {
   return { ...state };
 }
-export default connect(mapState)(withRouter)(Tags);
+export default connect(mapState)(Tags);

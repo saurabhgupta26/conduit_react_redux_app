@@ -1,34 +1,34 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+// import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./App.css";
-import { SHOW_ARTICLES, SHOW_TAGS } from "./store/types";
+import { fetchArticle } from "./store/types";
 import Tags from "./components/Tags";
 
 class App extends React.Component {
   componentDidMount() {
     // If login, user data
-    if (localStorage.authToken) {
-      let url = "https://conduit.productionready.io/api/user";
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Token ${localStorage.authToken}`,
-        },
-      })
-        .then((res) => res.json())
-        .then(({ user }) => {
-          this.setState({ isLoggedIn: true, userInfo: user });
-        })
-        .catch((err) => this.setState({ isLoggedIn: false }));
-    }
+    // if (localStorage.authToken) {
+    //   let url = "https://conduit.productionready.io/api/user";
+    //   fetch(url, {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       authorization: `Token ${localStorage.authToken}`,
+    //     },
+    //   })
+    //     .then((res) => res.json())
+    //     .then(({ user }) => {
+    //       this.setState({ isLoggedIn: true, userInfo: user });
+    //     })
+    //     .catch((err) => this.setState({ isLoggedIn: false }));
+    // }
     // Articles
-    fetch("https://conduit.productionready.io/api/articles?limit=10&offset=0")
-      .then((res) => res.json())
-      .then(({ articles }) => {
-        this.props.dispatch(SHOW_ARTICLES(articles));
-      });
+    this.props.dispatch(
+      fetchArticle(
+        "https://conduit.productionready.io/api/articles?limit=10&offset=0"
+      )
+    );
   }
 
   render() {
@@ -84,7 +84,7 @@ class App extends React.Component {
       // </BrowserRouter>
       <div className="">
         <ul>
-          {tags.map((tag) => {
+          {articles.map((article) => {
             return (
               <li>
                 <h2>{article.title}</h2>
@@ -101,4 +101,4 @@ class App extends React.Component {
 function mapState({ articles }) {
   return { articles };
 }
-export default connect(mapState)(withRouter)(App);
+export default connect(mapState)(App);
