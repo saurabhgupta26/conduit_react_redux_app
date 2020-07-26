@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import "./App.css";
 import { SHOW_ARTICLES, SHOW_TAGS } from "./store/types";
 
-class App extends React.Component {
+class Tags extends React.Component {
   componentDidMount() {
     // If login, user data
     if (localStorage.authToken) {
@@ -22,28 +22,32 @@ class App extends React.Component {
         })
         .catch((err) => this.setState({ isLoggedIn: false }));
     }
-    // Articles
-    fetch("https://conduit.productionready.io/api/articles?limit=10&offset=0")
-      .then((res) => res.json())
-      .then(({ articles }) => {
-        this.props.dispatch(SHOW_ARTICLES(articles));
-      });
-
     // Tags
     fetch(`https://conduit.productionready.io/api/tags`)
       .then((response) => response.json())
-      .then(({tags}) => this.props.dispatch(SHOW_TAGS({ tags })));
+      .then(({ tags }) => this.props.dispatch(SHOW_TAGS({ tags })));
   }
 
   render() {
-    const {articles} = this.props;
+    const { tags, articles } = this.props;
     return (
-      const {articles} = this.props
+      <div className="">
+        <ul>
+          {tags.map((tag) => {
+            return (
+              <li key={tag + Math.random()}>
+                <h2>{tag}</h2>
+              </li>
+            );
+          })}
+        </ul>
+        <button>{articles.length}</button>
+      </div>
     );
   }
 }
 
-function mapState({articles}) {
-  return { articles };
+function mapState(state) {
+  return { ...state };
 }
-export default connect(mapState)(withRouter)(App);
+export default connect(mapState)(withRouter)(Tags);

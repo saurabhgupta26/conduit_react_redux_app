@@ -1,5 +1,5 @@
-import {createStore} from "redux";
-import {SHOW_ARTICLES} from "./types";
+import {createStore, applyMiddleware} from "redux";
+import {SHOW_ARTICLES,SHOW_TAGS} from "./types";
 
 const initialState = {
     articles : []
@@ -22,4 +22,8 @@ function reducer(state = initialState, action) {
     }
 }
 
-export let store = createStore(reducer);
+let logger = (storeObj) => (next) => (action) => {
+    next(action)
+}
+
+export let store = createStore(reducer, applyMiddleware(logger));

@@ -1,4 +1,4 @@
-import {SHOW_ARTICLES} from './types';
+import {SHOW_ARTICLES, SHOW_TAGS} from './types';
 
 export function showArticles(payload) {
     return {

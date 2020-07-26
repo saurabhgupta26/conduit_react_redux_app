@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import "./App.css";
 import { SHOW_ARTICLES, SHOW_TAGS } from "./store/types";
+import Tags from "./components/Tags";
 
 class App extends React.Component {
   componentDidMount() {
@@ -28,15 +29,10 @@ class App extends React.Component {
       .then(({ articles }) => {
         this.props.dispatch(SHOW_ARTICLES(articles));
       });
-
-    // Tags
-    fetch(`https://conduit.productionready.io/api/tags`)
-      .then((response) => response.json())
-      .then(({tags}) => this.props.dispatch(SHOW_TAGS({ tags })));
   }
 
   render() {
-    const {articles} = this.props;
+    const { articles } = this.props;
     return (
       // <BrowserRouter>
       //   <Header isLoggedIn={isLoggedIn} userInfo={userInfo} />
@@ -86,12 +82,23 @@ class App extends React.Component {
       //     <Route component={Error} />
       //   </Switch>
       // </BrowserRouter>
-      const {articles_}
+      <div className="">
+        <ul>
+          {tags.map((tag) => {
+            return (
+              <li>
+                <h2>{article.title}</h2>
+                <p>{article.description}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <Tags />
+      </div>
     );
   }
 }
-
-function mapState({articles}) {
+function mapState({ articles }) {
   return { articles };
 }
 export default connect(mapState)(withRouter)(App);
