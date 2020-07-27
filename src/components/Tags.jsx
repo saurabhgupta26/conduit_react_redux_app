@@ -2,8 +2,7 @@ import React from "react";
 // import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 // import "./App.css";
-import {fetchTag} from "../store/types";
-
+import { fetchTag, handleTags } from "../store/actions";
 
 class Tags extends React.Component {
   componentDidMount() {
@@ -25,24 +24,27 @@ class Tags extends React.Component {
     // }
 
     // Tags
-    this.props.dispatch(
-      fetchTag("https://conduit.productionready.io/api/tags")
-    );
+    const url = "https://conduit.productionready.io/api/tags";
+    this.props.dispatch(fetchTag(url));
   }
 
   render() {
     const { tags, articles } = this.props;
     return (
-      <div className="">
-        <ul>
-          {tags.map((tag) => {
-            return (
-              <li key={tag + Math.random()}>
-                <h2>{tag}</h2>
-              </li>
-            );
-          })}
-        </ul>
+      <div className="tags_card">
+        <h4>Popular Tags</h4>
+        {tags.map((tag) => {
+          return (
+            <>
+              <button
+                className="btn_tags"
+                onClick={() => this.props.dispatch(handleTags(tag))}
+              >
+                {tag}
+              </button>
+            </>
+          );
+        })}
         <button>{articles.length}</button>
       </div>
     );

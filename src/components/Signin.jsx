@@ -1,5 +1,8 @@
 import React from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { handleSignin } from "../store/actions";
+import { userInfo } from "../store/types";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -7,7 +10,7 @@ class Signin extends React.Component {
     this.state = {
       email: "",
       password: "",
-      error : ''
+      error: "",
     };
   }
 
@@ -17,32 +20,12 @@ class Signin extends React.Component {
 
   handleSubmit = () => {
     let url = "https://conduit.productionready.io/api/users/login";
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: this.state }),
-    })
-    .then((res) => {
-      if (res.status === 200) {
-        this.props.history.push("/");
-        this.props.updateLoggedIn(true);
-      }
-      else {
-        this.setState({error: "Something went wrong!"})
-      }
-      return res.json();
-    })
-    .then(({user}) => {
-      user && localStorage.setItem(
-        'authToken', user.token
-        );
-    });
-  };
+    let userInfo = {...this.state};
+    this.props.dispatch(handleSignin(url, userInfo, this.props.history))
 
+  }
   render() {
-    let {email, password, error} = this.state;
+    let { email, password, error } = this.state;
     return (
       <>
         <div className="signup_card">
@@ -68,10 +51,7 @@ class Signin extends React.Component {
               value={password}
             />
             <p>{error && error}</p>
-            <button
-              className="primary primary_btn"
-              onClick={this.handleSubmit}
-            >
+            <button className="primary primary_btn" onClick={this.handleSubmit}>
               Log In
             </button>
           </div>
@@ -81,4 +61,8 @@ class Signin extends React.Component {
   }
 }
 
-export default withRouter(Signin);
+function mapState(state) {
+  return { ...state };
+}
+
+export default connect(mapState)(Signin);

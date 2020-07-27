@@ -1,9 +1,15 @@
 import React from "react";
-// import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import Header from "./components/Header.jsx";
+import Wholepage from "./components/Wholepage.jsx";
+import Signin from "./components/Signin.jsx";
+import Signup from "./components/Signup.jsx";
+import Error from "./components/Error.jsx";
+// import Article from "./components/Article.jsx";
 import "./App.css";
-import { fetchArticle } from "./store/types";
-import Tags from "./components/Tags";
+import { fetchArticle } from "./store/actions";
+// import Tags from "./components/Tags";
 
 class App extends React.Component {
   componentDidMount() {
@@ -24,77 +30,53 @@ class App extends React.Component {
     //     .catch((err) => this.setState({ isLoggedIn: false }));
     // }
     // Articles
-    this.props.dispatch(
-      fetchArticle(
-        "https://conduit.productionready.io/api/articles?limit=10&offset=0"
-      )
-    );
+    // const url = "https://conduit.productionready.io/api/articles?limit=10&offset=0";
+    // this.props.dispatch(fetchArticle(url));
   }
 
   render() {
-    const { articles } = this.props;
+    console.log(this.props);
+    // const { articles } = this.props;
     return (
-      // <BrowserRouter>
-      //   <Header isLoggedIn={isLoggedIn} userInfo={userInfo} />
-      //   <Switch>
-      //     <Route
-      //       render={() => (
-      //         <Wholepage
-      //           articles={this.state.articles}
-      //           tags={this.state.tags}
-      //           handleClick={this.handleClick}
-      //           handleGlobal={this.handleGlobal}
-      //           handleFeed={this.handleFeed}
-      //           userInfo={this.state.userInfo}
-      //           handleFavourite={this.handleFavourite}
-      //           handleUnfavourite={this.handleUnfavourite}
-      //         />
-      //       )}
-      //       path="/"
-      //       exact
-      //     />
-      //     <Route
-      //       render={() => <Signin updateLoggedIn={this.updateLoggedIn} />}
-      //       path="/login"
-      //       exact
-      //     />
-      //     <Route component={EditArticle} path="/articles/:slug/edit" />
-      //     <Route
-      //       render={() => (
-      //         <User
-      //           articles={this.state.articles}
-      //           handleFavourite={this.handleFavourite}
-      //           handleUnfavourite={this.handleUnfavourite}
-      //         />
-      //       )}
-      //       path="/profile/:profileSlug"
-      //     />
-      //     <Route
-      //       render={() => <Article userInfo={this.state.userInfo} />}
-      //       path="/articles/:slug"
-      //     />
-      //     <Route
-      //       render={() => <Setting handleLogout={this.handleLogout} />}
-      //       path="/setting/:profileSlug/"
-      //     />
-      //     <Route component={Signup} path="/signup" />
-      //     <Route component={CreateArticle} path="/create" />
-      //     <Route component={Error} />
-      //   </Switch>
-      // </BrowserRouter>
-      <div className="">
-        <ul>
-          {articles.map((article) => {
-            return (
-              <li>
-                <h2>{article.title}</h2>
-                <p>{article.description}</p>
-              </li>
-            );
-          })}
-        </ul>
-        <Tags />
-      </div>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route
+            render={() => (
+              <Wholepage />
+            )}
+            path="/"
+            exact
+          />
+          <Route
+            render={() => <Signin updateLoggedIn={this.updateLoggedIn} />}
+            path="/login"
+            exact
+          />
+          {/* <Route component={EditArticle} path="/articles/:slug/edit" /> */}
+          {/* <Route
+            render={() => (
+              <User
+                articles={this.state.articles}
+                handleFavourite={this.handleFavourite}
+                handleUnfavourite={this.handleUnfavourite}
+              />
+            )}
+            path="/profile/:profileSlug"
+          /> */}
+          {/* <Route
+            render={() => <Article userInfo={this.state.userInfo} />}
+            path="/articles/:slug"
+          /> */}
+          {/* <Route
+            render={() => <Setting handleLogout={this.handleLogout} />}
+            path="/setting/:profileSlug/"
+          /> */}
+          <Route component={Signup} path="/signup" />
+          {/* <Route component={CreateArticle} path="/create" /> */}
+          <Route component={Error} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }

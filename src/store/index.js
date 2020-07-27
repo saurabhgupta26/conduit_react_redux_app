@@ -1,8 +1,12 @@
 import { createStore, applyMiddleware } from "redux";
-import { SHOW_ARTICLES, SHOW_TAGS } from "./types";
+import { SHOW_ARTICLES, SHOW_TAGS, userInfo, error } from "./types";
+import thunk from "redux-thunk";
 const initialState = {
   articles: [],
-  tags: []
+  tags: [],
+  userInfo: [],
+  error: "",
+  isLogged: false
 };
 
 function reducer(state = initialState, action) {
@@ -17,14 +21,18 @@ function reducer(state = initialState, action) {
         ...state,
         tags: action.payload,
       };
+    case userInfo:
+      return {
+        ...state,
+        userInfo: action.payload,
+      };
+      case error:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
 }
-let thunk = (store) => (next) => (action) => {
-  if (typeof action === "function") {
-    return action(store.dispatch);
-  }
-  return next(action);
-};
 export let store = createStore(reducer, applyMiddleware(thunk));

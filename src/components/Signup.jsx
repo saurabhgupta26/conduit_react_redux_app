@@ -1,4 +1,6 @@
 import React from "react";
+// import { connect } from "react-redux";
+// import { handleSignup } from "../store/actions";
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -9,12 +11,11 @@ export default class Signup extends React.Component {
         password: ''
     };
   }
-
   handleInput = ({target : {name, value}}) => {
       this.setState({[name]: value})
   }
-
   handleSubmit= () => {
+    console.log("In submit");
       let url = 'https://conduit.productionready.io/api/users';
       fetch(url, {
         method:'POST',
