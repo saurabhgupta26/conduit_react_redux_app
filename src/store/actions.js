@@ -1,4 +1,12 @@
-import { SHOW_ARTICLES, SHOW_TAGS, userInfo, isLogged, error } from "./types";
+import {
+  SHOW_ARTICLES,
+  SHOW_TAGS,
+  userInfo,
+  isLogged,
+  error,
+  LOADCOMMENT,
+  LOADARTICLE,
+} from "./types";
 
 function showArticles(payload) {
   return {
@@ -12,12 +20,6 @@ function showTags(payload) {
     payload,
   };
 }
-// function userData(payload) {
-//   return {
-//     type: userInfo,
-//     payload,
-//   };
-// }
 export function fetchArticle(url) {
   return function (dispatch) {
     fetch(url)
@@ -37,7 +39,6 @@ export function fetchTag(url) {
   };
 }
 export function handleSignin(url, userInfo, history) {
-  console.log(history, "history");
   return function (dispatch) {
     fetch(url, {
       method: "POST",
@@ -49,7 +50,6 @@ export function handleSignin(url, userInfo, history) {
       .then((res) => {
         if (res.status === 200) {
           history.push("/");
-          // this.props.dispatch.updateLoggedIn(true);
         } else {
           return dispatch({ type: error, payload: "Something went wrong!" });
         }
@@ -71,6 +71,54 @@ export function handleTags(tag) {
       .then((res) => res.json())
       .then(({ articles }) => {
         return dispatch(showArticles(articles));
+      });
+  };
+}
+
+export function checkUser(url) {
+  return function (dispatch) {
+    if (localStorage.authToken) {
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Token ${localStorage.authToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((user) => {
+          dispatch({ type: isLogged, payload: true });
+          return dispatch({ type: userInfo, payload: user.user });
+        })
+        .catch((err) => dispatch({ type: userInfo, payload: null }));
+      console.log("EDIT");
+    }
+  };
+}
+
+export function loadArticle(url, articleId) {
+  return function (dispatch) {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(({ article }) => {
+        // console.log(article, "ACTION loadArticle")
+        return dispatch({ type: LOADARTICLE, payload: article });
+      });
+    let urlComment = `https://conduit.productionready.io/api/articles/${articleId}/comments`;
+    fetch(urlComment, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(({ comments }) => {
+        return dispatch({ type: LOADCOMMENT, payload: comments });
       });
   };
 }

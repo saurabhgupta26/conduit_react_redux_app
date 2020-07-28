@@ -65,4 +65,4 @@ function mapState(state) {
   return { ...state };
 }
 
-export default connect(mapState)(Signin);
+export default connect(mapState)(withRouter(Signin));

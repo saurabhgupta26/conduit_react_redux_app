@@ -1,12 +1,22 @@
 import { createStore, applyMiddleware } from "redux";
-import { SHOW_ARTICLES, SHOW_TAGS, userInfo, error } from "./types";
+import {
+  SHOW_ARTICLES,
+  SHOW_TAGS,
+  userInfo,
+  error,
+  isLogged,
+  LOADARTICLE,
+  LOADCOMMENT,
+} from "./types";
 import thunk from "redux-thunk";
 const initialState = {
   articles: [],
   tags: [],
   userInfo: [],
   error: "",
-  isLogged: false
+  isLogged: false,
+  loadArticle: [],
+  loadComment: [],
 };
 
 function reducer(state = initialState, action) {
@@ -26,10 +36,26 @@ function reducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
       };
-      case error:
+    case error:
       return {
         ...state,
         error: action.payload,
+      };
+    case isLogged:
+      return {
+        ...state,
+        isLogged: action.payload,
+      };
+    case LOADARTICLE:
+      console.log(action, "CALLED FROM ACTION");
+      return {
+        ...state,
+        loadArticle: action.payload,
+      };
+    case LOADCOMMENT:
+      return {
+        ...state,
+        loadComment: action.payload,
       };
     default:
       return state;

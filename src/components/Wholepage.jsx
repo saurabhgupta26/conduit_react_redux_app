@@ -4,9 +4,11 @@ import Tags from "./Tags.jsx";
 import Feed from "./Feed.jsx";
 import Loading from "./Loading.jsx";
 import { connect } from "react-redux";
-// import { withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import {checkUser} from "../store/actions";
 
 function Wholepage(props) {
+
   return (
     <>
       {!props.userInfo ? (
@@ -32,8 +34,8 @@ function Wholepage(props) {
               <div>
                 <Articles
                   // articles={this.props.dispatch(articles)}
-                  // handleFavourite={this.props.dispatch(articles)}
-                  // handleUnfavourite={this.props.dispatch(articles)}
+                  handleFavourite={props.handleFavourite}
+                  handleUnfavourite={props.handleUnfavourite}
                 />
               </div>
             ) : (
@@ -55,4 +57,4 @@ function Wholepage(props) {
 function mapState(state) {
   return { ...state };
 }
-export default connect(mapState)(Wholepage);
+export default connect(mapState)(withRouter(Wholepage));

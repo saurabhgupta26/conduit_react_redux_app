@@ -5,3 +5,6 @@ export const fetchTag = "fetchTag";
 export const userInfo = "userInfo";
 export const error = "error";
 export const isLogged = "isLogged";
+export const checkUser = "checkUser";
+export const LOADARTICLE = 'LOADARTICLE';
+export const LOADCOMMENT = 'LOADCOMMENT';
