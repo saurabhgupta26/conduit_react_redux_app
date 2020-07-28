@@ -18,23 +18,6 @@ import { SHOW_ARTICLES } from "./store/types";
 
 class App extends React.Component {
   componentDidMount() {
-    // If login, user data
-    // if (localStorage.authToken) {
-    //   let url = "https://conduit.productionready.io/api/user";
-    //   fetch(url, {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       authorization: `Token ${localStorage.authToken}`,
-    //     },
-    //   })
-    //     .then((res) => res.json())
-    //     .then(({ user }) => {
-    //       this.setState({ isLoggedIn: true, userInfo: user });
-    //     })
-    //     .catch((err) => this.setState({ isLoggedIn: false }));
-    // }
-
     // CHECK USER
     const url = "https://conduit.productionready.io/api/user";
     this.props.dispatch(checkUser(url));

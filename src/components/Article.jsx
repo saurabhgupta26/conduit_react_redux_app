@@ -52,7 +52,7 @@ class Article extends React.Component {
       },
       body: JSON.stringify({ body: this.state.body }),
     }).then((res) => {
-      if (res.status === 200) {
+      if (res.status === 200 && console.log(res.status)) {
         this.props.history.push(`/articles/${articleId}`);
       }
     });
