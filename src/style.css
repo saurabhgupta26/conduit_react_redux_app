@@ -291,17 +291,17 @@ label {
     color: rgb(185, 54, 54);
 }
 
-.article_title { 
+.article_titles { 
     background: #333333;
     width: 100vw;
     height:15rem;
 }
-.article_title h2 {
+.article_titles h2 {
     font-size: 2.75rem;
     color: white;
     padding: 3rem;   
 }
-.article_title .flex {
+.article_titles .flex {
     padding-left: 2.5rem;
 }
 

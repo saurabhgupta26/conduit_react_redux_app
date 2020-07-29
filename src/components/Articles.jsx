@@ -64,7 +64,6 @@ class Articles extends React.Component {
 
   render() {
     const { articles } = this.props;
-    console.log(articles, "ARTICLES ARTICLES_________");
     return (
       <>
         {articles.map((elem, i) => {

@@ -20,7 +20,13 @@ class Article extends React.Component {
     let url = `https://conduit.productionready.io/api/articles/${articleId}`;
     this.props.dispatch(loadArticle(url, articleId));
   }
-  componentDidUpdate(prevProps, prevState) {}
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.loadComment !== this.state.commentData) {
+  //     let articleId = this.props.match.params.slug;
+  //     let url = `https://conduit.productionready.io/api/articles/${articleId}`;
+  //     this.props.dispatch(loadArticle(url, articleId));
+  //   }
+  // }
 
   handleDelete = () => {
     let articleId = this.props.match.params.slug;
@@ -53,8 +59,9 @@ class Article extends React.Component {
       },
       body: JSON.stringify({ body: this.state.body }),
     }).then((res) => {
-      if (res.status === 200 && console.log(res.status)) {
+      if (res.status === 200) {
         this.props.history.push(`/articles/${articleId}`);
+        this.setState({ body: "" });
       }
     });
   };
@@ -67,7 +74,7 @@ class Article extends React.Component {
       <>
         {loadArticle.author ? (
           <section>
-            <div className="article_title">
+            <div className="article_titles">
               <h2>{loadArticle.title}</h2>
               <Link
                 className="article_author"
@@ -125,7 +132,7 @@ class Article extends React.Component {
               />
               <input
                 type="submit"
-                value="Post Comment"
+                value="COMMENT"
                 className="primary primary_btn"
                 onClick={this.handleSubmit}
               />
@@ -146,7 +153,7 @@ class Article extends React.Component {
                       className="author_image author_img cmnt_author"
                       src={elem.author.image}
                     />
-                    <p className='comment_author'>{elem.author.username}</p>
+                    <p className="comment_author">{elem.author.username}</p>
                     <p>{elem.createdAt.split("T", [1])}</p>
                   </div>
                 </div>
