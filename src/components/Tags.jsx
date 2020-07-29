@@ -29,7 +29,7 @@ class Tags extends React.Component {
   }
 
   render() {
-    const { tags, articles } = this.props;
+    const { tags } = this.props;
     return (
       <div className="tags_card">
         <h4>Popular Tags</h4>
@@ -45,7 +45,6 @@ class Tags extends React.Component {
             </>
           );
         })}
-        <button>{articles.length}</button>
       </div>
     );
   }

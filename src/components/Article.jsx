@@ -20,6 +20,7 @@ class Article extends React.Component {
     let url = `https://conduit.productionready.io/api/articles/${articleId}`;
     this.props.dispatch(loadArticle(url, articleId));
   }
+  componentDidUpdate(prevProps, prevState) {}
 
   handleDelete = () => {
     let articleId = this.props.match.params.slug;
@@ -61,54 +62,47 @@ class Article extends React.Component {
   render() {
     let { loadArticle, loadComment, userInfo } = this.props;
     // console.log(loadArticle, "whole state");
-    let {body} = this.state;
+    let { body } = this.state;
     return (
       <>
         {loadArticle.author ? (
           <section>
-            <h2>{loadArticle.title}</h2>
-            {console.log(loadArticle, "LOADARTICLE")}
-            <Link
-              className="article_author"
-              to={`/profile/${loadArticle.author.username}`}
-            >
-              <img
-                className="user_image"
-                src={loadArticle.author.image}
-                alt="img"
-              />
-              <h2>{loadArticle.author.username}</h2>
-              <p>{loadArticle.createdAt}</p>
-            </Link>
+            <div className="article_title">
+              <h2>{loadArticle.title}</h2>
+              <Link
+                className="article_author"
+                to={`/profile/${loadArticle.author.username}`}
+              >
+                <div className="flex flex1">
+                  <img
+                    className="user_image"
+                    src={loadArticle.author.image}
+                    alt="img"
+                  />
+                  <div>
+                    <h3>{loadArticle.author.username}</h3>
+                    <p>{loadArticle.createdAt.split("T")[0]}</p>
+                  </div>
+                </div>
+              </Link>
 
-            {this.props.userInfo &&
-            this.props.loadArticle.author.username ===
-              this.props.userInfo.username ? (
-              <>
-                <Link to={`/articles/${this.props.match.params.slug}/edit`}>
-                  Edit Article
-                </Link>
-                <Link onClick={this.handleDelete}>Delete Article</Link>
-              </>
-            ) : (
-              <> </>
-            )}
-
-            <p>{loadArticle.body}</p>
+              {this.props.userInfo &&
+              this.props.loadArticle.author.username ===
+                this.props.userInfo.username ? (
+                <>
+                  <Link to={`/articles/${this.props.match.params.slug}/edit`}>
+                    Edit Article
+                  </Link>
+                  <Link onClick={this.handleDelete}>Delete Article</Link>
+                </>
+              ) : (
+                <> </>
+              )}
+            </div>
+            <p className="article_body">{loadArticle.body}</p>
             <h1>{loadArticle.tagList}</h1>
+            <hr className="hr" />
           </section>
-        ) : (
-          <Loading />
-        )}
-        {loadComment ? (
-          loadComment.map((elem) => {
-            return (
-              <>
-                <h2> {elem.body} </h2>
-                <p>{elem.createdAt.split("T", [1])}</p>
-              </>
-            );
-          })
         ) : (
           <Loading />
         )}
@@ -123,15 +117,44 @@ class Article extends React.Component {
               value={body}
               className="comment_field"
             />
-            <input
-              type="submit"
-              value="Post Comment"
-              className="primary primary_btn"
-              onClick={this.handleSubmit}
-            />
+            <div className="flex">
+              <img
+                src={userInfo.image}
+                alt="prof"
+                className="author_img author_image cmnt_author"
+              />
+              <input
+                type="submit"
+                value="Post Comment"
+                className="primary primary_btn"
+                onClick={this.handleSubmit}
+              />
+            </div>
           </div>
         ) : (
           <> </>
+        )}
+
+        {loadComment ? (
+          loadComment.map((elem) => {
+            return (
+              <>
+                <div className="comments_card">
+                  <h2> {elem.body} </h2>
+                  <div className="flex flex1">
+                    <img
+                      className="author_image author_img cmnt_author"
+                      src={elem.author.image}
+                    />
+                    <p className='comment_author'>{elem.author.username}</p>
+                    <p>{elem.createdAt.split("T", [1])}</p>
+                  </div>
+                </div>
+              </>
+            );
+          })
+        ) : (
+          <Loading />
         )}
 
         {!userInfo ? (

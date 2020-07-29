@@ -48,13 +48,13 @@ function AuthHeader({userInfo}) {
   return (
     <>
       {userInfo  ? (
-        <div className="flex">
+        <div className="flex container">
           {userInfo && console.log(userInfo.username)}
           <Link className="logo" to="/">
             <h3 to="/">conduit</h3>
           </Link>
           <ul className="nav_bar">
-            <div className="flex">
+            <div className="flex  container">
               <NavLink activeClassName="primary_btn" className="primary" to="/">
                 <li>Home</li>
               </NavLink>
@@ -63,7 +63,7 @@ function AuthHeader({userInfo}) {
                 className="primary"
                 to="/create"
               >
-                <li>New Post</li>
+                <li><i class="far fa-edit"></i>New Post</li>
               </NavLink>
 
               <NavLink

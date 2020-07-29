@@ -22,6 +22,7 @@ class App extends React.Component {
     const url = "https://conduit.productionready.io/api/user";
     this.props.dispatch(checkUser(url));
   }
+
   render() {
     console.log(this.props);
     // const { articles } = this.props;

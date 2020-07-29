@@ -122,3 +122,29 @@ export function loadArticle(url, articleId) {
       });
   };
 }
+
+export function handlePersonalFeed(url) {
+  return function (dispatch) {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Token ${localStorage.authToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        return dispatch({ type: SHOW_ARTICLES, payload: data.articles });
+      });
+  };
+}
+
+export function handleGlobalFeed(url) {
+  return function (dispatch) {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        return dispatch({ type: SHOW_ARTICLES, payload: data.articles });
+      });
+  };
+}

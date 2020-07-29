@@ -36,6 +36,35 @@ class User extends React.Component {
         this.setState({ userArticles: articles });
       });
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.userInfo &&
+      this.state.userInfo.username !== this.props.match.params.profileSlug
+    ) {
+      let userId = this.props.match.params.profileSlug;
+      let url = `https://conduit.productionready.io/api/profiles/${userId}`;
+      let myArticleUrl = `https://conduit.productionready.io/api/articles?author=${userId}&limit=5&offset=0`;
+      fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then(({ profile }) => {
+          this.setState({ userInfo: profile });
+        });
+      fetch(myArticleUrl, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        authorization: `Token ${localStorage.authToken}`,
+      })
+        .then((res) => res.json())
+        .then(({ articles }) => {
+          this.setState({ userArticles: articles });
+        });
+    }
+  }
 
   myArticles = () => {
     let userId = this.props.match.params.profileSlug;
@@ -110,17 +139,23 @@ class User extends React.Component {
     return (
       <>
         {userInfo ? (
-          <section>
+          <section className="container">
             <h2>{userInfo.username}</h2>
             <h2>{userInfo.bio}</h2>
             <img className="user_image" src={userInfo.image} alt="img" />
 
             {this.state.userInfo.following ? (
-              <button onClick={() => this.handleUnfollow(false)}>
+              <button
+                className="favorite_count follow_btn"
+                onClick={() => this.handleUnfollow(false)}
+              >
                 Unfollow {userId}
               </button>
             ) : (
-              <button onClick={() => this.handleFollow(true)}>
+              <button
+                className="favorite_count follow_btn"
+                onClick={() => this.handleFollow(true)}
+              >
                 Follow {userId}
               </button>
             )}
@@ -166,7 +201,6 @@ class User extends React.Component {
                           </span>
                         </Link>
                       </div>
-                      {console.log(elem.favorited, "HERE is ")}
                       {!elem.favorited ? (
                         <button
                           className="favorite_count"

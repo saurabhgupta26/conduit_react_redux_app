@@ -8,7 +8,9 @@ import {
   LOADARTICLE,
   LOADCOMMENT,
 } from "./types";
+
 import thunk from "redux-thunk";
+
 const initialState = {
   articles: [],
   tags: [],

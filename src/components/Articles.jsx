@@ -64,11 +64,12 @@ class Articles extends React.Component {
 
   render() {
     const { articles } = this.props;
+    console.log(articles, "ARTICLES ARTICLES_________");
     return (
       <>
         {articles.map((elem, i) => {
           return (
-            <section className="article_top" key={i}>
+            <section className="article_top container" key={i}>
               {console.log(elem.favorited, "IS FAVOURITED")}
               <div className="flex">
                 <div className="flex">
