@@ -34,9 +34,9 @@ class Setting extends React.Component {
   handleLogout = (history) => {
     return function (dispatch) {
       localStorage.removeItem("authToken");
-      this.props.history.push(`/`);
-      dispatch({ type: isLogged, payload: false });
-      return dispatch({ type: userInfo, payload: null });
+      history.push(`/`);
+      this.props.dispatch({ type: isLogged, payload: false });
+      return this.props.dispatch({ type: userInfo, payload: null });
     };
   }
   
