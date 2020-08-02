@@ -9,7 +9,6 @@ class Header extends React.Component {
     const url= "https://conduit.productionready.io/api/user";
     this.props.dispatch(checkUser(url));
   }
-  
   render() {
     const { isLogged, userInfo } = this.props;
     return isLogged ? <AuthHeader userInfo={userInfo}  /> : <NonAuthHeader />;
@@ -96,9 +95,7 @@ function AuthHeader({userInfo}) {
     </>
   );
 }
-
 function mapState({isLogged,userInfo}) {
   return {isLogged,userInfo };
 }
-
 export default connect(mapState)(withRouter(Header));
