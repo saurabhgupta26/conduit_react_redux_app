@@ -13,8 +13,6 @@ import User from "./components/User.jsx";
 import EditArticle from "./components/EditArticle.jsx";
 import "./App.css";
 import { checkUser } from "./store/actions";
-import { SHOW_ARTICLES } from "./store/types";
-// import Tags from "./components/Tags";
 
 class App extends React.Component {
   componentDidMount() {
@@ -24,8 +22,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    // const { articles } = this.props;
     return (
       <BrowserRouter>
         <Header />
