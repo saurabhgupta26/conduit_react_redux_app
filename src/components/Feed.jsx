@@ -8,7 +8,6 @@ class Feed extends Component {
       "https://conduit.productionready.io/api/articles/feed?limit=10&offset=0";
     this.props.dispatch(handlePersonalFeed(url));
   };
-
   handleGlobal = () => {
     let url = `https://conduit.productionready.io/api/articles?limit=10&offset=0`;
     this.props.dispatch(handleGlobalFeed(url));

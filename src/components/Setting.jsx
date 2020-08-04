@@ -56,7 +56,6 @@ class Setting extends React.Component {
       }
     });
   };
-
   render() {
     const {userInfo} = this.props;
     if (!userInfo) {
