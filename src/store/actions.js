@@ -95,7 +95,6 @@ export function checkUser(url) {
     }
   };
 }
-
 export function loadArticle(url, articleId) {
   return function (dispatch) {
     fetch(url, {
@@ -122,7 +121,6 @@ export function loadArticle(url, articleId) {
       });
   };
 }
-
 export function handlePersonalFeed(url) {
   return function (dispatch) {
     fetch(url, {
@@ -138,7 +136,6 @@ export function handlePersonalFeed(url) {
       });
   };
 }
-
 export function handleGlobalFeed(url) {
   return function (dispatch) {
     fetch(url)

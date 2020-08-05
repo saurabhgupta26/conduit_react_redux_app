@@ -5,10 +5,8 @@ import Feed from "./Feed.jsx";
 import Loading from "./Loading.jsx";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import {checkUser} from "../store/actions";
 
 function Wholepage(props) {
-
   return (
     <>
       {!props.userInfo ? (
